@@ -43,7 +43,7 @@ select:focus {
   background: #343a40;
   color: #fff;
   border: none;
-  padding: 8px 13px 10px 13px;
+  padding: 5px 13px 8px 13px;
   margin: 0 15px 0 0;
   position: relative;
   top: -2px;
@@ -100,4 +100,48 @@ select {
   width: 70px;
   position: relative;
   top: -2px;
+  cursor: pointer;
+}
+
+select:hover,
+select:focus {
+  border-color: rgb(124, 12, 12);
+  background-color: rgb(124, 12, 12);
+}
+
+.search-box-wrapper {
+  display: inline-flex;
+  font-size: 20px;
+}
+
+.search-box-input {
+  font-size: inherit;
+  border: 0.2em solid rgb(124, 12, 12);
+  border-radius: 0.5em 0 0 0.5em;
+  padding: 0.2em 0.5em;
+  outline: 0;
+}
+
+.search-box-input:hover,
+.search-box-input:focus {
+  border-color: rgb(124, 12, 12);
+}
+
+.search-box-button {
+  font-size: inherit;
+  border: 0.2em solid rgb(124, 12, 12);
+  border-radius: 0 0.5em 0.5em 0;
+  background-color: rgb(124, 12, 12);
+  border-left: 0;
+  padding: 0 0.75em;
+  color: white;
+  font-weight: bold;
+  outline: 0;
+  cursor: pointer;
+}
+
+.search-box-button:hover,
+.search-box-button:focus {
+  border-color: rgb(124, 12, 12);
+  background-color: rgb(124, 12, 12);
 }

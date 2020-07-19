@@ -9,6 +9,7 @@ export default class Books extends Component {
     this.state = {
       books: [],
       searchField: "",
+      sort: "",
     };
   }
 
@@ -20,7 +21,8 @@ export default class Books extends Component {
       .query({ q: this.state.searchField })
       .then((data) => {
         console.log(data);
-        this.setState({ books: [...data.body.items] });
+        const cleanData = this.cleanData(data);
+        this.setState({ books: cleanData });
       });
   };
 
@@ -29,11 +31,54 @@ export default class Books extends Component {
     this.setState({ searchField: e.target.value });
   };
 
+  handleSort = (e) => {
+    console.log(e.target.value);
+    this.setState({ sort: e.target.value });
+  };
+
+  cleanData = (data) => {
+    const cleanedData = data.body.items.map((book) => {
+      if (book.volumeInfo.hasOwnProperty("publishedDate") === false) {
+        book.volumeInfo["publishedDate"] = "0000";
+      } else if (book.volumeInfo.hasOwnProperty("imageLinks") === false) {
+        book.volumeInfo["imageLinks"] = {
+          thumbnail:
+            "https://thumbs.dreamstime.com/b/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg",
+        };
+      }
+
+      return book;
+    });
+
+    return cleanedData;
+  };
+
   render() {
+    const filteredBooks = this.state.books.sort((a, b) => {
+      if (this.state.sort == "Newest") {
+        console.log("in newest");
+        return (
+          parseInt(b.volumeInfo.publishedDate.substring(0, 4)) -
+          parseInt(a.volumeInfo.publishedDate.substring(0, 4))
+        );
+      } else if (this.state.sort == "Oldest") {
+        return (
+          parseInt(a.volumeInfo.publishedDate.substring(0, 4)) -
+          parseInt(b.volumeInfo.publishedDate.substring(0, 4))
+        );
+      }
+
+      return;
+    });
+
     return (
       <div>
-        <Search searchBook={this.searchBook} handleSearch={this.handleSearch} />
-        <BookList books={this.state.books} />
+        <Search
+          searchBook={this.searchBook}
+          handleSearch={this.handleSearch}
+          handleSort={this.handleSort}
+        />
+        <BookList books={filteredBooks} />
       </div>
     );
   }

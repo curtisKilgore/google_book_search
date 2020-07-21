@@ -14,7 +14,7 @@ const BookCard = (props) => {
             published: props.published,
             image: props.image,
             title: props.title,
-            author: props.author,
+            author: props.author.join(", "),
           })
         }
       >
